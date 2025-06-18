@@ -32,6 +32,11 @@ const projects = [
     description: 'A Frontend e-commerce website built with React and Tailwind CSS.',
     link: 'https://github.com/Antima2004/frontend',
   },
+  {
+    title:'Nextjs-search-results-app',
+    description:'A search results Static webapp built with Next.js and tailwindcss.',
+    link:'https://search-results-app.vercel.app/'
+  },
 ];
 
 const Projects = () => {
