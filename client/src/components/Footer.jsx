@@ -45,7 +45,7 @@ const Footer = () => {
               {[
                 { icon: <FaFacebookF />, link: 'https://www.facebook.com/antima.mishra.5832', label: 'Facebook' },
                 { icon: <FaGithub />, link: 'https://github.com/Antima2004', label: 'GitHub' },
-                { icon: <FaLinkedinIn />, link: 'https://www.linkedin.com/in/antima-mishra-4aa626254?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app', label: 'LinkedIn' },
+                { icon: <FaLinkedinIn />, link: 'https://www.linkedin.com/in/antima-mishra-4aa626254/', label: 'LinkedIn' },
                 { icon: <FaInstagram />, link: 'https://www.instagram.com/__antima.m_12.02/profilecard/?igsh=cTNjM3Rqbmp2MTE0', label: 'Instagram' },
               ].map((social, index) => (
                 <a

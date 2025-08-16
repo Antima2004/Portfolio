@@ -1,138 +1,192 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import {Textarea}  from "../components/ui/Textarea";
+import { Label } from "../components/ui/Label";
+import { Mail, Phone, MapPin} from "lucide-react";
+import {
+  FaGithub,
+  FaLinkedinIn,
+  FaInstagram
+} from 'react-icons/fa';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState('');
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "antimamishra277@gmail.com",
+      href: "mailto:antimamishra277@gmail.com",
+    },
+    {
+      icon: FaLinkedinIn,
+      label: "Linkedin",
+      value: "Antima Mishra",
+      href: "https://www.linkedin.com/in/antima-mishra-4aa626254/",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Mumbai Maharashtra",
+      href: "#",
+    },
+  ];
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const socialLinks = [
+    { icon: FaGithub, href: "https://github.com/Antima2004", label: "GitHub" },
+    { icon: FaLinkedinIn, href: "http://localhost:3000/contact", label: "LinkedIn" },
+    {icon:FaInstagram, href:"", label:"Instagram"}
+  ];
 
-  const validateForm = () => {
-    const { name, email, message } = formData;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!name || !email || !message) return 'Please fill in all fields.';
-    if (!emailRegex.test(email)) return 'Please enter a valid email address.';
-    return '';
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const errorMsg = validateForm();
-    if (errorMsg) {
-      setStatus(errorMsg);
-      return;
-    }
-
-    setIsLoading(true);
-    setStatus('');
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) throw new Error('Failed to send message');
-      const data = await res.json();
-      setStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (err) {
-      console.error(err);
-      setStatus('Failed to send message. Please try again later.');
-    } finally {
-      setIsLoading(false);
-    }
+    console.log("Form submitted");
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center px-4 py-8 mt-0">
-      <motion.h1
-        className="text-4xl sm:text-5xl font-bold text-cyan-400 mb-6 text-center"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Contact Me
-      </motion.h1>
+    <div className="min-h-screen pt-32 pb-20 px-6 bg-black">
+      <div className="container mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+            Contact Me
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Feel free to reach out for collaborations, freelance work, or just to say hi!
+          </p>
+        </div>
 
-      <motion.p
-        className="text-base sm:text-lg text-cyan-200 max-w-2xl text-center mb-8 px-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
-      >
-        Feel free to reach out for collaborations, freelance work, or just to say hi!
-      </motion.p>
-
-      <div className="bg-gray-900 border border-cyan-400 rounded-xl shadow-lg p-6 w-full max-w-6xl flex flex-col lg:flex-row gap-8">
-        <form className="w-full lg:w-1/2" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-cyan-200 text-sm mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-black border border-cyan-400 text-cyan-100"
-              placeholder="Your Name"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-cyan-200 text-sm mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-black border border-cyan-400 text-cyan-100"
-              placeholder="Your Email"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-cyan-200 text-sm mb-2">Message</label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-black border border-cyan-400 text-cyan-100"
-              placeholder="Your Message"
-              rows="4"
-            ></textarea>
-          </div>
-
-          {status && (
-            <div
-              className={`p-3 mb-4 rounded ${
-                status.includes('successfully')
-                  ? 'bg-green-800 text-green-300 border border-green-500'
-                  : 'bg-red-800 text-red-300 border border-red-500'
-              }`}
-            >
-              {status}
+        {/* Main Contact Section - Form */}
+        <div className="bg-gradient-card border border-primary/20 rounded-lg p-6 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Contact Form */}
+            <div className="p-2">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="name" className="text-foreground text-base">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="Your Name"
+                    className="mt-2 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground h-12"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="text-foreground text-base">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Your Email"
+                    className="mt-2 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground h-12"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="message" className="text-foreground text-base">
+                    Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Your Message"
+                    rows={6}
+                    className="mt-2 bg-secondary/50 border-primary/30 text-foreground placeholder:text-muted-foreground resize-none"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-12 text-base"
+                >
+                  Send Message
+                </Button>
+              </form>
             </div>
-          )}
 
-          <button
-            type="submit"
-            className="bg-cyan-500 text-black px-4 py-2 rounded hover:bg-cyan-400 transition duration-300 disabled:opacity-50"
-            disabled={isLoading}
-          >
-            {isLoading ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
+            {/* Empty placeholder instead of Map */}
+            <div className="h-[500px] lg:h-auto flex items-center justify-center text-muted-foreground">
+              <iframe
+                title="Google Map"
+                className="w-full h-full border-2 border-cyan-400 rounded-xl"
+                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89247.86811670137!2d72.86136092501174!3d19.273780517190325!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1749633899714!5m2!1sen!2sin"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            
+            </div>
+          </div>
+        </div>
 
-        <div className="w-full lg:w-1/2 h-96">
-          <iframe
-            title="Google Map"
-            className="w-full h-full border-2 border-cyan-400 rounded-xl"
-            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d89247.86811670137!2d72.86136092501174!3d19.273780517190325!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1749633899714!5m2!1sen!2sin"
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+        {/* Additional Contact Information */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Contact Information */}
+          <Card className="bg-gradient-card border-border/50">
+            <CardHeader>
+              <CardTitle className="text-xl text-foreground">Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {contactInfo.map((info, index) => (
+                <div key={index} className="flex items-center space-x-3">
+                  <div className="flex-shrink-0">
+                    <info.icon className="text-primary" size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">{info.label}</p>
+                    <a
+                      href={info.href}
+                      className="text-foreground hover:text-primary transition-colors text-sm"
+                    >
+                      {info.value}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Social Links */}
+          <Card className="bg-gradient-card border-border/50">
+            <CardHeader>
+              <CardTitle className="text-xl text-foreground">Follow Me</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex space-x-3">
+                {socialLinks.map((social, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    size="icon"
+                    className="border-primary text-primary hover:bg-primary hover:text-primary-foreground hover:shadow-glow transition-all duration-300"
+                    asChild
+                  >
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                    >
+                      <social.icon size={18} />
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Additional Info */}
+          <Card className="bg-gradient-card border-border/50">
+            <CardContent className="pt-6">
+              <h3 className="font-semibold text-foreground mb-2 text-lg">
+                Let's Build Something Amazing
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Whether you're looking to build a new application, improve an existing one,
+                or just want to discuss ideas, I'm always excited to collaborate.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
